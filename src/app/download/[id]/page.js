@@ -12,14 +12,26 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Download, Star, Users, Shield, Smartphone } from "lucide-react";
-import Link from "next/link";
-import Script from "next/script";
+import {
+  Download,
+  Star,
+  Users,
+  Shield,
+  Smartphone,
+} from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 
 export default function Page() {
   const { id } = useParams();
   const [contentData, setContentData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -27,9 +39,7 @@ export default function Page() {
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL || ""}/api/content/${id}`,
-          {
-            cache: "no-store",
-          }
+          { cache: "no-store" }
         );
         const data = await res.json();
         if (data.success) setContentData(data.data);
@@ -42,12 +52,22 @@ export default function Page() {
     fetchContent();
   }, [id]);
 
+  const handleDownloadClick = () => {
+    setShowModal(true);
+  };
+
+  const handleContinue = () => {
+    setShowModal(false);
+    window.open(contentData.lockerLink, "_blank");
+  };
+
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center">
         Loading...
       </div>
     );
+
   if (!contentData)
     return (
       <div className="min-h-screen flex items-center justify-center text-red-500">
@@ -61,7 +81,6 @@ export default function Page() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Header */}
             <Card className="overflow-hidden">
               <div className="relative">
                 <img
@@ -72,10 +91,7 @@ export default function Page() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 text-white">
                   <div className="flex items-center space-x-2 mb-2">
-                    <Badge
-                      variant="secondary"
-                      className="bg-white/20 text-white border-white/30"
-                    >
+                    <Badge variant="secondary" className="bg-white/20 text-white border-white/30">
                       {contentData.category}
                     </Badge>
                     {contentData.featured && (
@@ -99,7 +115,6 @@ export default function Page() {
               </div>
             </Card>
 
-            {/* About Section */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -114,7 +129,6 @@ export default function Page() {
               </CardContent>
             </Card>
 
-            {/* Key Features */}
             <Card>
               <CardHeader>
                 <CardTitle>Key Features</CardTitle>
@@ -179,45 +193,39 @@ export default function Page() {
 
                 <Separator />
 
-                <Link href={contentData.lockerLink} passHref legacyBehavior>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full mb-3"
-                  >
-                    <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                      <Download className="w-4 h-4 mr-2" />
-                      Download Now
-                    </Button>
-                  </a>
-                </Link>
+                <Button
+                  onClick={handleDownloadClick}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download Now
+                </Button>
                 <div className="flex items-center justify-center space-x-1 mt-3 text-xs text-gray-500">
                   <Shield className="w-3 h-3" />
                   <span>Safe & Secure Download</span>
                 </div>
               </CardContent>
             </Card>
-
-            {/* <Card className="bg-amber-50 border-amber-200">
-              <CardHeader>
-                <CardTitle className="text-amber-800 text-sm flex items-center gap-2">
-                  <Shield className="w-4 h-4" />
-                  <span>Safety Notice</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xs text-amber-700">
-                  Always download from trusted sources. This app is not
-                  affiliated with any official brand. Use at your own
-                  discretion.
-                </p>
-              </CardContent>
-            </Card> */}
           </div>
         </div>
       </div>
 
-      {/* OGAds Locker Script */}
+      {/* Modal */}
+      <Dialog open={showModal} onOpenChange={setShowModal}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Confirm Human Verification</DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-gray-600">
+            To access the download, please complete a quick offer to prove you are not a robot. You’ll be redirected to the download after verification.
+          </p>
+          <DialogFooter className="mt-4">
+            <Button onClick={handleContinue}
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            >Complete</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
