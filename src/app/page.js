@@ -118,7 +118,13 @@ export default function HomePage() {
               ))}
             </div>
           )}
+          <div className="m-10">
+
+          <script async="async" data-cfasync="false" src="//pl27312282.profitableratecpm.com/01e0471042dcbaf4c645f523329b51ba/invoke.js"></script>
+          <div id="container-01e0471042dcbaf4c645f523329b51ba"></div>
+          </div>
         </div>
+       
       </section>
     </div>
   );

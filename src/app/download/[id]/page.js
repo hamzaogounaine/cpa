@@ -151,6 +151,8 @@ export default function Page() {
 
           {/* Sidebar */}
           <div className="space-y-6">
+          <script async="async" data-cfasync="false" src="//pl27312282.profitableratecpm.com/01e0471042dcbaf4c645f523329b51ba/invoke.js"></script>
+          <div id="container-01e0471042dcbaf4c645f523329b51ba"></div>
             <Card className="sticky top-4">
               <CardHeader>
                 <CardTitle className="text-center">
@@ -219,6 +221,7 @@ export default function Page() {
           <p className="text-sm text-gray-600">
             To access the download, please complete a quick offer to prove you are not a robot. You’ll be redirected to the download after verification.
           </p>
+          
           <DialogFooter className="mt-4">
             <Button onClick={handleContinue}
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
