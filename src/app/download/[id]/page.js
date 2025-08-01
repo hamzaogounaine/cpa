@@ -151,8 +151,8 @@ export default function Page() {
 
           {/* Sidebar */}
           <div className="space-y-6">
-          <script async="async" data-cfasync="false" src="//pl27312282.profitableratecpm.com/01e0471042dcbaf4c645f523329b51ba/invoke.js"></script>
-          <div id="container-01e0471042dcbaf4c645f523329b51ba"></div>
+          <script async="async" data-cfasync="false" src="//pl27003266.profitableratecpm.com/3212e516f6d6fe8f8af9c77aeb4506d0/invoke.js"></script>
+          <div id="container-3212e516f6d6fe8f8af9c77aeb4506d0"></div>
             <Card className="sticky top-4">
               <CardHeader>
                 <CardTitle className="text-center">
